@@ -1,2 +1,9 @@
-git checkout -- app.js撤销修改,回到最近一次add或commit的状态
-hahaha
+git checkout -- app.js丢弃工作区的修改(删除),使之回到最近一次add或commit的状态
+git reset HEAD app.js把add到暂存区的修改撤回放到工作区
+HEAD表示最新版本
+git管理的是修改,不是文件
+git rm app.js联同版本库里的文件也删除
+ssh-keygen -t rsa -C "1361230426@qq.com"一路回车,创建SSH KEY,本地git仓库与github远程仓库之间的传输是ssh加密的,在GitHub上创建ssh key,把上述命令产生的用户根目录下的id_rsa.pub复制上
+git remote add origin git@github.com:用户名/远程仓库名.git令本地仓库关联远程仓库
+git push -u origin 分支名 把本地仓库内容推送到远程仓库,第一次推送加-u,后续不加
+
