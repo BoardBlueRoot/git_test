@@ -1,0 +1,2 @@
+git checkout -- app.js撤销修改,回到最近一次add或commit的状态
+hahaha
