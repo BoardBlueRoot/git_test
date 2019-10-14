@@ -15,4 +15,23 @@ git branch -d dev删除dev分支
 git merge dev合并dev分支到当前分支,合并点就是dev分支最后一个提交
 git merge --no-ff -m'提交信息'新建一个提交作为合并点
 如果合并的两个分支的修改内容有交集(冲突,如修改同一文件的同一行为不同内容),则合并会成功,但冲突内容会有标记,要把冲突内容改成我们想要的,再提交一次
-
+git stash保护现场,用于改了一半还没提交,又要去改其他东西,会清空暂存区
+修复bug,创建新分支,修复,合并分支,删除分支,若修复前有工作没做完,git stash保护现场
+git stash list查看保护现场列表
+git stash pop恢复第一个现场并在列表中删除(pop)
+git stash apply stash@{列表中的id}恢复特定现场
+git stash drop删除现场列表
+添加新feature时,新建分支,把新功能调好了,合并分支,若不想要了,删除分支(-D)
+从远程克隆的版本库,默认只能看到master分支,自己创建dev分支,推到远程,同事也推了,有冲突,会报错,解决方法把最新的dev分支抓下来,本地合并,解决冲突,再推.抓之前要建立本地dev与远程dev的连接
+git branch --set-upstream-to=origin/dev dev建立远程dev与本地dev的连接,即-u属性
+git pull当前是dev分支,就把远程的dev分支拉下来
+git rebase把当前未push的分叉提交历史整理成直线
+git tag v1.0 [commit_id]在id为[]的commit上打标签,没有[]默认打在最新commit,标签作用:解决commit_id不表意,找commit好找
+git tag查看所有标签
+git show tag名 查看标签信息
+git log--pretty=oneline --abbrev-commit提交历史
+git tag -a v1.1 -m '1.1版本,修复了一些bug' [commit_id]带说明的标签
+git push origin tag名 推送标签到远程
+git push origin --tag推送所有标签到远程
+git tag -d tag名 本地删除标签
+git push origin :refs/tags/tag名 远程删除标签
