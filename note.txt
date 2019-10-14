@@ -35,3 +35,12 @@ git push origin tag名 推送标签到远程
 git push origin --tag推送所有标签到远程
 git tag -d tag名 本地删除标签
 git push origin :refs/tags/tag名 远程删除标签
+git remote -v 查看远程库信息
+git remote rm <origin>删除名为origin的远程库
+git remote add <gitee> git@gitee.com:用户名/项目(仓库)名.git关联码云远程库,起名叫gitee
+git config --global color.ui true开启颜色选项
+忽略特殊文件:有些文件只想用git管理,但是不想提交(配置文件,账号密码),让git忽略他,git status不显示:提交一个文件,文件名叫.gitignore,http://github.com/github/gitignore有现成的,到处拼一下加入自己的配置就行了
+git config --global alias.co checkout命令别名,保存在.gitconfig文件里,可直接改
+
+
+
