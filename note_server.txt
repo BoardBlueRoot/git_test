@@ -1,0 +1,55 @@
+服务器，Ubuntu16.04
+
+安装nginx，不能访问？
+管理—本实例安全组—配置规则—快速创建规则—勾上HTTP（80）--确定
+
+在本地GitBash下连接远程服务器：
+ssh root@47.97.40.82
+第一次连接时出一串字，输入yes即可，输密码连接
+	
+var/www/html目录是web目录，相当于apache的www¬目录 
+
+买域名，解析
+
+把前端部署到服务器：
+npm run webpack 打包dist
+scp -r dist/ root@47.97.40.82:/root把dist推到远程服务器，推文件夹加-r递归推文件不加，：/root推到root/目录
+mv dist/ /var/www/html/移动dist到www目录
+rm默认的文件
+cd dist/		mv *.* ../所有文件移动到上一级目录
+npm install --produtcion安包
+这样访问域名就响应我们自己的页面了
+
+把服务端部署到服务器：
+git clone http://github.com/BoardBlueRoot/answer-api.git
+mv answer-api/ /root/server/
+cd /root/server/answer-api
+npm install
+
+forever进程守护（后台运行node脚本）：
+npm i -g forever
+forever start app.js
+forever stop app.js	restart
+forever list查看所有forever的程序
+
+反向代理：
+www.evangelion.space访问页面，api.evangelion.space是数据接口，app.js监听329端口，但是阿里云服务器只开放80端口，所以要设置代理，监听80端口，如果访问api.evangelion.space则跳转到http://127.0.0.1:329
+vim /etc/nginx/nginx.conf
+在http{  的末尾} 加
+server{
+	listen  80;
+	server_name  api.evangelion.space;//这里自己改
+	location / {
+		proxy_set_header  X-Real-IP  $remote_addr;
+		proxy_set_header  Host  $http_host;
+		proxy_pass  http://127.0.0.1:329//这里自己改
+}
+//这里就是设置路由
+//location /server2 {proxy_pass  http://127.0.0.1:500}
+}
+加多个server{  }，分别用forever启动，就能在一台服务器上运行多个服务端
+
+如果前端ajax请求的是get（‘/api/session’），他就会请求www.evangelion.space/api/session，这时要vim /etc/nginx/sites-available/default修改服务器默认路由
+location /api {	proxy_pass http://127.0.0.1:329;	  }
+app.js中路由中间件关心路径app.use(‘/api’,router)
+但是我们请求get（‘http://api.evangelion.space‘）不就完了
